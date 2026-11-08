@@ -1,0 +1,19 @@
+{
+  "name": "catalago-de-produtos",
+  "version": "1.0.0",
+  "description": "Módulo TypeScript tipado para catálogo de produtos",
+  "main": "dist/product.js",
+  "types": "dist/product.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tests",
+    "test": "npm run build && npm run typecheck && node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
