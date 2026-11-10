@@ -18,12 +18,40 @@ O build gera JavaScript CommonJS e declarações de tipos em `dist`. O comando
 `typecheck` verifica também os exemplos de erros de tipos esperados. `test`
 executa o build, a verificação de tipos e os testes de execução com `node:test`.
 
+## Experimentar no terminal
+
+Após `npm run build`, execute `node` na pasta do projeto. No prompt `>`, digite
+os comandos abaixo, um por vez:
+
+```javascript
+const { Category, InventoryService, Product, ProductFactory, ProductRepository } = require("./dist/product.js")
+const product = new Product(ProductFactory.generateId(), "Notebook", 3000, Category.NOTEBOOK, 5, "active")
+const repository = new ProductRepository()
+repository.create(product)
+repository.findAll()
+product.calculateFinalPrice(0.1)
+new InventoryService().updateStock(product, -2)
+repository.update(product)
+repository.findById(product.id)
+```
+
+O preço com desconto é `2700` e o estoque após a atualização é `3`. O Node
+exibe `undefined` para comandos que não retornam um valor, como `create` e
+`update`; isso não indica erro. Digite `.exit` para sair. Os produtos ficam
+somente em memória e são perdidos ao encerrar o Node.
+
+## Outra maneira de experimentar no terminal
+Usar o Copilot do Github e digitar comandos para testar o aplicativo e o próprio Copilot já vai explicando o que está acontecendo durante a execução do comando.
+
 ## Modelagem e uso
 
 O módulo está em `src/product.ts`. `IProduct` define os dados, `Product`
 implementa essa interface e adiciona o cálculo de preço, e `ProductStatus`
 restringe os status possíveis. `Category` fornece categorias conhecidas;
 `category` permanece `string` para permitir categorias adicionais.
+
+O exemplo a seguir é TypeScript para um arquivo dentro de `src`, não para
+colar no prompt do Node. O caminho `./product` é relativo a esse arquivo.
 
 ```typescript
 import {
