@@ -41,7 +41,21 @@ exibe `undefined` para comandos que não retornam um valor, como `create` e
 somente em memória e são perdidos ao encerrar o Node.
 
 ## Outra maneira de experimentar no terminal
-Usar o Copilot do Github e digitar comandos para testar o aplicativo e o próprio Copilot já vai explicando o que está acontecendo durante a execução do comando.
+
+Usar o Copilot do Github e digitar comandos para testar o aplicativo e o próprio Copilot já vai explicando o que está acontecendo durante a execução do comando. Vejam alguns outros exemplos.
+
+Para alterar o estoque e salvar a alteração no repositório:
+
+```javascript
+new InventoryService().updateStock(produto, -2)
+repositorio.update(produto)
+repositorio.findById(produto.id)
+```
+Para remover:
+
+```javascript
+repositorio.delete(produto.id)
+```
 
 ## Modelagem e uso
 
