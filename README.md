@@ -40,6 +40,24 @@ exibe `undefined` para comandos que não retornam um valor, como `create` e
 `update`; isso não indica erro. Digite `.exit` para sair. Os produtos ficam
 somente em memória e são perdidos ao encerrar o Node.
 
+Para criar 3 produtos e inseri-los no repositório, execute:
+
+```javascript
+const { Product, ProductFactory, ProductRepository, Category } = require('./dist/product.js')
+
+const repositorio = new ProductRepository()
+
+const produtos = [
+  new Product(ProductFactory.generateId(), 'Notebook', 3000, Category.NOTEBOOK, 5, 'active'),
+  new Product(ProductFactory.generateId(), 'Smartphone', 1800, Category.SMARTPHONE, 10, 'active'),
+  new Product(ProductFactory.generateId(), 'Mouse Gamer', 150, Category.GAMER, 3, 'active')
+]
+
+produtos.forEach(produto => repositorio.create(produto))
+
+repositorio.findAll()
+```
+
 ## Outra maneira de experimentar no terminal
 
 Usar o Copilot do Github e digitar comandos para testar o aplicativo e o próprio Copilot já vai explicando o que está acontecendo durante a execução do comando. Vejam alguns outros exemplos.
