@@ -77,7 +77,8 @@ export function sortProducts(
     return String(first).localeCompare(String(second), "pt-BR");
   });
 }
-
+// Retorna uma mensagem de status legível para o produto com base no seu status.
+//Verificação exaustiva para garantir que todos os status possíveis sejam tratados.
 export function getStatusMessage(status: ProductStatus): string {
   switch (status) {
     case "active":
