@@ -3,6 +3,35 @@
 Este projeto reúne um módulo TypeScript de modelagem e operações de catálogo,
 sem interface gráfica, banco de dados ou API real.
 
+## Estrutura do projeto
+
+```text
+Catalago de Produtos\
+|-- src\
+|   |-- index.ts          # Exemplo de criação e cadastro de um produto
+|   `-- product.ts        # Tipos, interfaces, classes e regras do catálogo
+|-- tests\
+|   |-- product.test.cjs  # Testes de comportamento com node:test
+|   |-- types.ts          # Testes de tipagem e erros esperados
+|   `-- tsconfig.json     # Configuração da verificação de tipos dos testes
+|-- dist\                # JavaScript, declarações de tipos e source maps gerados
+|-- node_modules\        # Dependências instaladas pelo npm
+|-- package.json         # Metadados, dependências e comandos do projeto
+|-- package-lock.json    # Registro das versões exatas das dependências
+|-- tsconfig.json        # Configuração da compilação TypeScript
+|-- README.md            # Documentação do projeto
+|-- .gitignore           # Arquivos e diretórios ignorados pelo Git
+`-- .gitattributes       # Regras de tratamento de arquivos pelo Git
+```
+
+O arquivo `src\product.ts` concentra os contratos (`IProduct`, `IRepository<T>`
+e `ApiResponse<T>`), as classes de produto, fábrica, estoque e repositório em
+memória, além dos tipos auxiliares, categorias e funções de ordenação e mensagens
+de status. `src\index.ts` demonstra o uso do módulo.
+
+As pastas `node_modules` e `dist` são geradas, respectivamente, pela instalação
+das dependências e pela compilação.
+
 ## Ambiente e execução
 
 Requisitos: Node.js 20 ou superior e npm. Na pasta do projeto:
