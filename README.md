@@ -136,6 +136,55 @@ diferentes tipos. `Partial`, `Readonly`, `Pick` e `Omit` derivam variações de
 restringe os campos de ordenação. O `never` no `switch` sinaliza em compilação
 um status novo que ainda não tenha mensagem.
 
+## Contratos e organização
+
+Os contratos definem os dados e as operações que uma estrutura deve oferecer,
+sem implementar seu funcionamento. Neste projeto, são declarados como interfaces
+em `src\product.ts`:
+
+| Interface | Contrato |
+|
+| `IProduct` | Define os campos `id`, `name`, `price`, `category`, `stock` e `status` de um produto. |
+| `IRepository<T>` | Define as operações de cadastro, consulta, atualização e remoção de itens do tipo `T`. |
+| `ApiResponse<T>` | Define uma resposta com `success: boolean` e `data: T`, sem realizar chamadas de API. |
+
+O parâmetro genérico `T` permite reutilizar um contrato com diferentes tipos.
+Em `IRepository<IProduct>`, por exemplo, os itens são produtos; em
+`ApiResponse<IProduct[]>`, os dados da resposta são uma lista de produtos.
+
+O contrato do repositório declara estas operações:
+
+```typescript
+export interface IRepository<T> {
+  create(item: T): void;
+  findById(id: number): T | undefined;
+  findAll(): T[];
+  update(item: T): void;
+  delete(id: number): void;
+}
+```
+
+Na implementação `ProductRepository`, `create` rejeita IDs duplicados,
+`findById` retorna um produto ou `undefined`, e `findAll` retorna uma lista,
+que pode estar vazia. `update` substitui os dados do produto com o mesmo ID;
+`delete` remove esse produto. As duas últimas operações lançam erro se o ID
+não existir. O retorno `void` indica que o método não retorna um valor útil.
+
+As declarações `Product implements IProduct` e
+`ProductRepository implements IRepository<IProduct>` permitem ao TypeScript
+verificar se as classes atendem aos respectivos contratos. As interfaces são
+removidas na compilação e não validam dados durante a execução.
+
+A organização atual separa responsabilidades dentro do mesmo módulo:
+`Product` representa o produto e calcula descontos; `ProductFactory` gera IDs;
+`InventoryService` aplica as regras de estoque; e `ProductRepository` armazena
+os produtos em memória. `src\index.ts` demonstra o uso, enquanto `tests` reúne
+as verificações de comportamento e de tipos.
+
+Essa separação permite criar outra implementação de repositório mantendo o
+contrato. Uma integração com banco de dados ou API pode exigir adaptar os
+retornos da interface para operações assíncronas com `Promise`.
+
 ## Regras e decisões técnicas
 
 - O desconto é uma fração entre 0 e 1, inclusive; valores inválidos geram
